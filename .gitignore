@@ -1,0 +1,6 @@
+.precomp/
+.*.swp
+*~
+*.o
+*.hi
+elm-stuff
