@@ -16,7 +16,7 @@ import (
 */
 
 /* my own module for go lang */
-/* copyright: Myoungjin Jeon <jeongoon@gmail.com> */
+/* copyright: Open Software License 3.0; Myoungjin Jeon <jeongoon@gmail.com> */
 func jeongoon( M int, N int ) [][]int {
 	// M: number of selection ( 0 ... (M-1) )
 	// N: number of choice
@@ -78,6 +78,7 @@ func jeongoon( M int, N int ) [][]int {
 }
 
 
+/* copyright: MIT License Copyright (c) 2018 Logan Spears */
 func notnil( n, k  int ) [][]int {
 	results := [][]int{}
 	if n <= 0 || k <= 0 || k > n {
