@@ -137,9 +137,9 @@ func Benchmark_notnil10x2000(b *testing.B) {
 	}
 }
 
-func Benchmark_notnil22x8(b *testing.B) {
-	m := 22
-	o := 8
+func Benchmark_notnil24x3(b *testing.B) {
+	m := 24
+	o := 3
 
 	for j := 0; j < o; j ++ {
 		for i := 1; i < m; i++ {
@@ -152,7 +152,7 @@ func Benchmark_warmingup_jeongoon(b *testing.B) {
 	m := 20
 
 	for i := 1; i < m; i++ {
-		_ = notnil( m, i )
+		_ = jeongoon( m, i )
 	}
 }
 
@@ -168,9 +168,9 @@ func Benchmark_jeongoon10x2000(b *testing.B) {
 
 }
 
-func Benchmark_jeongoon22x8(b *testing.B) {
-	m := 22
-	o := 8
+func Benchmark_jeongoon24x3(b *testing.B) {
+	m := 24
+	o := 3
 
 	for j := 0; j < o; j ++ {
 		for i := 1; i < m; i++ {
@@ -179,3 +179,12 @@ func Benchmark_jeongoon22x8(b *testing.B) {
 	}
 }
 
+/* last test tends to finish late on my machine
+ * so one more test for more accurate result */
+func Benchmark_outro_notnil(b *testing.B) {
+	m := 20
+
+	for i := 1; i < m; i++ {
+		_ = notnil( m, i )
+	}
+}

@@ -1,0 +1,77 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           haskell-combinations
+version:        0.1.0.0
+synopsis:       Some Combinations implementation with Benchmark
+description:    Please see the README on GitHub at <https://github.com/jeongoon/haskell-combinations#readme>
+category:       Algorithm
+homepage:       https://github.com/jeongoon/combinations-bench#readme
+bug-reports:    https://github.com/jeongoon/combinations-bench/issues
+author:         Myoungjin Jeon <jeongoon@gmail.com>
+maintainer:     jeongoon@gmail.com
+copyright:      Myoungjin Jeon <jeongoon@gmail.com>
+license:        OSL-3.0
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/jeongoon/combinations-bench
+
+library
+  exposed-modules:
+      DynamicProgramming
+      LeadersAndFollwers
+      TailAfterTail
+  other-modules:
+      Paths_haskell_combinations
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable haskell-combinations-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_haskell_combinations
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-combinations
+  default-language: Haskell2010
+
+test-suite haskell-combinations-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_haskell_combinations
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , haskell-combinations
+  default-language: Haskell2010
+
+benchmark haskell-combinations-benchmark
+  type: exitcode-stdio-1.0
+  main-is: Bench.hs
+  other-modules:
+      Paths_haskell_combinations
+  hs-source-dirs:
+      benchmark
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , criterion
+    , haskell-combinations
+  default-language: Haskell2010
