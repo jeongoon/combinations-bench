@@ -1,0 +1,15 @@
+#+STARTUP: content nohideblocks align
+* How to test
+
+#+BEGIN_SRC sh
+  sh> go get -u "github.com/jeongoon/go-combinations"
+  sh> go get -u "github.com/notnil/combos"
+  sh> go test -bench=.
+  .. messages ..
+#+END_SRC
+
+** Issues / Note
+ - Add some warming up code at the (1) front, (2) each group, (3) end for better calculation.
+ - Leave your computer as possible as you can during the testing as it will be affected by
+ your interaction and the result will look faster than it actually is.
+

@@ -1,0 +1,45 @@
+#+STARTUP: content nohideblocks align
+* haskell-combinations
+
+This stack package contains modules for making combinations.
+
+I renamed some module for better distinction.
+
+ - [X] LeadersAndFollowers (from me)
+ - [X] TailAfterTail (from me)
+ - [X] DynamicProgramming (from rosetta code web site)
+
+** stackage issue
+***  package.yaml
+   You should change your /'package.yaml'/ file when you are using /stack/
+   Because /stack/ will update `haskell-combinations.cabal` file *automatically* base on the
+  /'package.yaml/' file.  
+
+* How to Test (Benchmark)
+
+** Terminal Text based Report
+  This will print out the report in text.
+#+BEGIN_SRC sh
+  sh> pwd
+  /Your/Path/To/combinations-bench/haskell-combinations
+  sh> stack build haskell-combinations:bench:haskell-combinations-benchmark
+
+  .. messages ..
+#+END_SRC
+
+** Html Ouput
+
+  This benchmark use criterion which has ability to create nice html output.
+
+#+BEGIN_SRC sh
+  sh> stack build haskell-combinations:exe:haskell-combinations-benchmark-exe -o output.html
+  .. maessages ..
+  sh> firefox output.html # or your favourite web browser.
+#+END_SRC
+
+** Caveat
+ I am still struggling to understand what excatly those benmarks means. because
+ `DynamicProgramming` is actually quite fast until size of 15. but the result
+ from criterion isn't.
+ I'll update as soon as I found the information about writing or reading the data
+ in correct manner.

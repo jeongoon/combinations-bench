@@ -25,15 +25,16 @@ library:
   source-dirs: src
 
 executables:
-  haskell-combinations-exe:
-    main:                Main.hs
-    source-dirs:         app
+  haskell-combinations-benchmark-exe:
+    main:               Bench.hs
+    source-dirs:        benchmark
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
     - haskell-combinations
+    - criterion
 
 tests:
   haskell-combinations-test:

@@ -45,7 +45,7 @@ write down the which function or data type we will export.
 My humble module has only one function named `combinations`.
 
 \begin{code}
-module LeadersAndFollwers -- method name
+module LeadersAndFollowers -- method name
   ( combinations
   ) where
 \end{code}
