@@ -9,6 +9,8 @@ Copyright (c) 2022 JEON Myoungjin <jeongoon@g... >
 
 LICENSE: [Open Software License 3.0](https://opensource.org/licenses/OSL-3.0)
 
+= This article will be updated on [my blog](https://jeongoon.github.io/posts/2022-04-03-Combinations-TailAfterTail.html)
+
 = Yet Another Combinations
 
 I was trying to make a new type of combinations after making a combinations
