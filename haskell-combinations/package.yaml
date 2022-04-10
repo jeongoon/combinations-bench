@@ -26,7 +26,7 @@ library:
 
 executables:
   haskell-combinations-benchmark-exe:
-    main:               Bench.hs
+    main:               Bench.lhs
     source-dirs:        benchmark
     ghc-options:
     - -threaded
@@ -49,9 +49,22 @@ tests:
 
 benchmarks:
   haskell-combinations-benchmark:
-    main:               Bench.hs
+    main:               Bench.lhs
     source-dirs:        benchmark
     ghc-options:
+    - -O2
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-combinations
+    - criterion
+
+  take-vs-pattern-matching-benchmark:
+    main:               BenchPatternMatchingOrTake.lhs
+    source-dirs:        benchmark2
+    ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
