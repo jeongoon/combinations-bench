@@ -5,6 +5,8 @@ LICENSE: [Open Software License 3.0](https://opensource.org/licenses/OSL-3.0)
 = You can find this article will be updated on [my blog](https://jeongoon.github.io/posts/2022-04-03-Combinations-TailAfterTail.html)
 
 \begin{code}
+{-# LANGUAGE BangPatterns #-}
+
 module TailAfterTail
   ( combinations
   , combinations'
@@ -12,7 +14,7 @@ module TailAfterTail
   , allCombinations'
   ) where
 
-import Data.List (tails, inits)
+import Data.List (tails, inits, scanl')
 
 \end{code}
 
@@ -39,7 +41,7 @@ genStep prevTails members' =
 membersTails = reverse . tail . inits -- tail is used to skip empty list.
 
 allCombinationsScanl :: [a] -> [[[[a]]]]
-allCombinationsScanl ms = scanl genStep (combinations1' ms) (membersTails ms)
+allCombinationsScanl ms = scanl' genStep (combinations1' ms) (membersTails ms)
 
 flatten_allCombinationsGrouped allComboFunc =
   map concat . allComboFunc
@@ -58,7 +60,7 @@ unsafe_allCombinations :: [a] -> [[[[a]]]]
 unsafe_allCombinations members =
   let
     helper [] = []
-    helper cases =
+    helper ! cases =
       let
         genStep (m:ms) (_:cs:[]) = [ [ m : c | c <- cs ] ]
         genStep (m:ms) (_:cs) =

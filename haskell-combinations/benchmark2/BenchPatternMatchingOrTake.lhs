@@ -1,4 +1,4 @@
-To create a bencmakr executable module name generally be `Main`
+To create a bencmark executable module name generally be `Main`
 \begin{code}
 module Main where
 

@@ -1,20 +1,9 @@
----
-title: Benchmark With Criterion
-description: writing benchmark code in haskell with criterion
-keywords: haskell, benchmark, hpack, criterion
-author: Myoungjin Jeon
-tags: haskell, benchmark, hpack, criterion
----
+This benchmark shows how fast each combination method will be under
+small combination or medium size combination. (the number of members are 15)
 
-**Latest version of this article** will be available [here](https://jeongoon.github.io/posts/2022-04-11-How-to-write-benchmark-with-criterion.html).
-
-----
-
-I wrote about [how to create benchmark programme with stack](https://jeongoon.github.io/posts/2022-04-10-How-to-write-benchmark-with-stack.html) package tool.
-
-And file is an example of benchmark code in haskell with package [criterion](https://github.com/haskell/criterion).
-
-And this module could be a *App*, we need to declare as **Main**
+== Module Name and Criterion
+We will create a executable out of this module, So the name of module should
+b e `Main`. and `Criterion` will be used for more accurate benchmark result.
 
 \begin{code}
 module Main where
@@ -25,11 +14,6 @@ import Criterion.Main (defaultMain)
 
 == Load Modules To Test
 
-To test how fast my combinations module are, I made serveral individual module
-per combinations method.
-
-you could access codes at [here](https://github.com/jeongoon/combinations-bench/tree/main/haskell-combinations/src)
-
 \begin{code}
 import qualified TailAfterTail as Tat
 import qualified LeadersAndFollowers as Laf
@@ -38,21 +22,23 @@ import qualified DynamicProgramming as Dyn
 
 == Prepare Sample Members
 
-Some Numbers are used to be tested with `criterion`.
+Some Numbers are used to be tested with `criterion`
+
+`size5` is for small sample. `medium` for medium sample.
 
 \begin{code}
 small, medium, large :: [Int]
-small  = [1..5]
+small = [1..5]
 medium = [1..12]
-large  = [1..22]
+large = [1..22]
 \end{code}
 
 == Helper Function and Data Types
 
 In Elm language, not to confuse the order of argument,
-it forces us  to write a data type, especially when the function
+it is recommeded to write a data type, especially when the function
 has more than three arguments. And I believe that in haskell, it will be
-the good practice as well.
+the same, IMHO.
 
 \begin{code}
 data TestData a =
@@ -61,6 +47,7 @@ data TestData a =
   , combiFunction :: [a] -> [[a]]
   , sample :: [a]
   }
+
 \end{code}
 
 === benchAllCombo
@@ -82,6 +69,10 @@ mkAllCombinationsWith combiFunction ms =
   concat [ combiFunction ms n | n <- [1..length ms] ]
 \end{code}
 
+**FIXME**
+However, this is not actually recommened approach. and will give inaccurate
+result.
+
 == main
 
 `main` function is the executable code block for this benchmark.
@@ -94,14 +85,15 @@ any arguments and execute each benchmark group (`bgroup`)
 main :: IO ()
 main = do
   defaultMain
+    [
 \end{code}
 
 === bench
 
 [bench](https://hackage.haskell.org/package/criterion-1.5.9.0/docs/Criterion.html#v:bench)
-will create a `Benchmark` type but *please note that*
+will create a `Benchmark` type but please note that
 
-You *should* pass:
+You should pass:
 
 1. A function to test
 2. An agrument to be applied.
@@ -117,14 +109,11 @@ suits in the type in a context*
 Rather you should do:
 
 ```haskell
-bench "test benchmark message" $ nf testFunction anArgument
+bench "test benchmark message" $ nf testFunction aArgument
 ```
 
-*nf* stands for `normal form` and another one is `weak head normal form`.
-I skipped this explanation as I don't have enough knowledge to share yet.
-
 \begin{code}
-    [ bgroup "Small Sample Comparison"
+      bgroup "Small Sample Comparison"
       [ benchAllCombo TestData { name = "Leaders and Followers"
                                , combiFunction = mkAllCombinationsWith Laf.combinations
                                , sample = small }
@@ -162,6 +151,7 @@ I skipped this explanation as I don't have enough knowledge to share yet.
                                , combiFunction = Tat.allCombinations
                                , sample = medium }
       ]
+
       , bgroup "Large Sample Comparison"
       [ benchAllCombo TestData { name = "Tail After Tail (scanl) 1"
                                , combiFunction = Tat.allCombinations
@@ -188,9 +178,6 @@ I skipped this explanation as I don't have enough knowledge to share yet.
     ]
 \end{code}
 
-It was a bit long and could have written in helper function but I kept changing
-the layout of benchmark so I didn't make one. and copied and paste. 😓
-
 and you could run the test with `stack` in two ways:
 
 === bench target
@@ -208,14 +195,14 @@ time                 3.935 μs   (3.918 μs .. 3.963 μs)
 mean                 4.013 μs   (3.952 μs .. 4.230 μs)
 std dev              353.3 ns   (100.6 ns .. 721.7 ns)
 variance introduced by outliers: 84% (severely inflated)
-
+                                  
 benchmarking Small Sample Comparison/Tail After Tail
 time                 3.758 μs   (3.573 μs .. 4.002 μs)
                      0.982 R²   (0.972 R² .. 0.995 R²)
 mean                 3.645 μs   (3.545 μs .. 3.785 μs)
 std dev              413.5 ns   (300.6 ns .. 567.0 ns)
 variance introduced by outliers: 90% (severely inflated)
-
+                                  
 benchmarking Small Sample Comparison/Dynamic Programming
 time                 3.291 μs   (3.162 μs .. 3.492 μs)
                      0.966 R²   (0.946 R² .. 0.982 R²)
@@ -224,12 +211,8 @@ std dev              795.0 ns   (617.9 ns .. 1.153 μs)
 variance introduced by outliers: 97% (severely inflated)
 
 .. snip ..
+
 ```
-
-**Note:** As you can see *criterion* try many times to ensure the result is reliable.
-even though it is not perfect only because your system is not always in the
-same condition.
-
 === executable target
 
 ```sh
@@ -241,8 +224,3 @@ sh> stack exec haskell-combinations-benchmark-exe -- -o output.html
 ```
 
 `output.html` will report the result with some helpful graphs.
-
-Okay. This is it.
-
-I'll update if I found if there are more effective way to explain usage.
-and about WHNF (Weak Head Normal Form).
