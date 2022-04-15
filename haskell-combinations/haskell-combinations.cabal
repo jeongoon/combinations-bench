@@ -77,6 +77,20 @@ benchmark haskell-combinations-benchmark
     , haskell-combinations
   default-language: Haskell2010
 
+benchmark tail-after-tail-benchmark
+  type: exitcode-stdio-1.0
+  main-is: BenchTat.lhs
+  other-modules:
+      Paths_haskell_combinations
+  hs-source-dirs:
+      benchmarkTat
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , criterion
+    , haskell-combinations
+  default-language: Haskell2010
+
 benchmark take-vs-pattern-matching-benchmark
   type: exitcode-stdio-1.0
   main-is: BenchPatternMatchingOrTake.lhs

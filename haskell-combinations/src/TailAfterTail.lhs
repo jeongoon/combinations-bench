@@ -8,14 +8,17 @@ LICENSE: [Open Software License 3.0](https://opensource.org/licenses/OSL-3.0)
 {-# LANGUAGE BangPatterns #-}
 
 module TailAfterTail
-  ( combinations
-  , combinations'
+  ( combinationsWithScanl
+  , combinationsWithSingleStep
+  , combinations
+  , combinationsWithTwoSteps
+  , allCombinationsWithScanl
+  , allCombinationsWithSingleStep
+  , allCombinationsWithTwoSteps
   , allCombinations
-  , allCombinations'
   ) where
 
 import Data.List (tails, inits, scanl')
-
 \end{code}
 
 
@@ -40,45 +43,91 @@ genStep prevTails members' =
 
 membersTails = reverse . tail . inits -- tail is used to skip empty list.
 
-allCombinationsScanl :: [a] -> [[[[a]]]]
-allCombinationsScanl ms = scanl' genStep (combinations1' ms) (membersTails ms)
+allCombinationsWithScanl' :: [a] -> [[[[a]]]]
+allCombinationsWithScanl' ms =
+  scanl' genStep (combinations1' ms) (membersTails ms)
 
 flatten_allCombinationsGrouped allComboFunc =
   map concat . allComboFunc
 
-allCombinationsGrouped :: [a] -> [[[a]]]
-allCombinationsGrouped =
-  flatten_allCombinationsGrouped allCombinationsScanl
+allCombinationsWithScanlGrouped :: [a] -> [[[a]]]
+allCombinationsWithScanlGrouped =
+  flatten_allCombinationsGrouped allCombinationsWithScanl'
 
-allCombinations :: [a] -> [[a]]
-allCombinations = concat . allCombinationsGrouped
+allCombinationsWithScanl :: [a] -> [[a]]
+allCombinationsWithScanl = concat . allCombinationsWithScanlGrouped
 \end{code}
 
+== pure implementation without scanl (SingleStep)
+
+the following code is new pure implementation without scanl or zipWith.
+sligtly faster than original implementation with (bang pattern: !).
+(small: faster, medium: similar, large: faster)
 
 \begin{code}
-unsafe_allCombinations :: [a] -> [[[[a]]]]
-unsafe_allCombinations members =
+unsafe_allCombinationsWithSingleStep :: [a] -> [[[[a]]]]
+unsafe_allCombinationsWithSingleStep members =
   let
-    helper [] = []
-    helper ! cases =
+    helper ! cases = -- bang pattern added
       let
         genStep (m:ms) (_:cs:[]) = [ [ m : c | c <- cs ] ]
         genStep (m:ms) (_:cs) =
           [ m : c | c <- concat cs ] : genStep ms cs
       in
-        cases : helper (genStep members cases)
+         cases : helper (genStep members cases)
   in
     helper [ [[m]] | m <- members ]
 
-unsafe_allCombinationsGrouped :: [a] -> [[[a]]]
-unsafe_allCombinationsGrouped =
-  flatten_allCombinationsGrouped unsafe_allCombinations
+unsafe_allCombinationsWithSingleStepGrouped :: [a] -> [[[a]]]
+unsafe_allCombinationsWithSingleStepGrouped =
+  flatten_allCombinationsGrouped unsafe_allCombinationsWithSingleStep
 
-allCombinations' :: [a] -> [[a]]
-allCombinations' members =
-  concat . take (length members) . unsafe_allCombinationsGrouped $ members
+allCombinationsWithSingleStep :: [a] -> [[a]]
+allCombinationsWithSingleStep members =
+  concat
+  . take (length members)
+  . unsafe_allCombinationsWithSingleStepGrouped
+  $ members
 
 
+\end{code}
+
+\begin{code}
+allCombinationsWithTwoSteps' :: [a] -> [[[[a]]]]
+allCombinationsWithTwoSteps'
+  members@(fm:rms) = -- ^ fm : first member; rms: rest memebers
+  let
+    initFirstCase = [[fm]]
+    initRestCases = [ [[m]] | m <- rms ]
+
+    genFirstCase {- prevTail -} =
+      map (fm:) . concat {- $ prevTail -}
+
+    genRestCases _ [] = []
+    genRestCases (m:ms) rcs@(_:rcs') = -- ^ rcs : rest of cases
+      (map (m:) . concat $ rcs) : (genRestCases ms rcs')
+
+    helper [] = []
+    helper ! prevTail =
+      let
+        newTail = genRestCases rms (tail prevTail)
+      in
+        ((genFirstCase prevTail) : newTail) : helper newTail
+
+  in (initFirstCase : initRestCases) : helper initRestCases
+
+allCombinationsWithTwoStepsGrouped :: [a] -> [[[a]]]
+allCombinationsWithTwoStepsGrouped =
+  flatten_allCombinationsGrouped allCombinationsWithTwoSteps'
+
+allCombinationsWithTwoSteps :: [a] -> [[a]]
+allCombinationsWithTwoSteps members =
+  concat . allCombinationsWithTwoStepsGrouped $ members
+\end{code}
+
+== combinations variant from each implementation
+
+\begin{code}
 combinationsWith :: ([a] -> [[[a]]]) -> [a] -> Int -> Int -> [[a]]
 combinationsWith allComboGroupedFunc ms n1@selectFrom n2@selectTo =
   let
@@ -103,6 +152,13 @@ combinationsWith allComboGroupedFunc ms n1@selectFrom n2@selectTo =
     . drop (pred n1')           -- 1. ignore some
     $ allComboGroupedFunc ms
 
-combinations = combinationsWith allCombinationsGrouped
-combinations' = combinationsWith unsafe_allCombinationsGrouped
+combinationsWithScanl      = combinationsWith allCombinationsWithScanlGrouped
+combinationsWithSingleStep = combinationsWith unsafe_allCombinationsWithSingleStepGrouped
+combinationsWithTwoSteps   = combinationsWith allCombinationsWithTwoStepsGrouped
+\end{code}
+
+== choose default allCombinations and combinations
+\begin{code}
+allCombinations = allCombinationsWithTwoSteps
+combinations = combinationsWithTwoSteps
 \end{code}

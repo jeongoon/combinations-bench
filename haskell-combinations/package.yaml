@@ -60,6 +60,18 @@ benchmarks:
     - haskell-combinations
     - criterion
 
+  tail-after-tail-benchmark:
+    main:               BenchTat.lhs
+    source-dirs:        benchmarkTat
+    ghc-options:
+    - -O2
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - haskell-combinations
+    - criterion
+
   take-vs-pattern-matching-benchmark:
     main:               BenchPatternMatchingOrTake.lhs
     source-dirs:        benchmark2
