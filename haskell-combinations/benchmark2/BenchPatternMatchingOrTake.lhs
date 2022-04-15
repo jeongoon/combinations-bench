@@ -72,26 +72,7 @@ benchAllCombo (TestData name combiFunction sample) =
 main :: IO ()
 main = do
   defaultMain
-    [ bgroup "Tail After Tail"
-      [ benchAllCombo TestData { name = "Medium 1"
-                               , combiFunction = Tat.allCombinations
-                               , sample =  medium
-                               }
-      , benchAllCombo TestData { name = "Large 1"
-                               , combiFunction = Tat.allCombinations
-                               , sample = large
-                               }
-      , benchAllCombo TestData { name = "Medium 2"
-                               , combiFunction = Tat.allCombinations
-                               , sample =  medium
-                               }
-      , benchAllCombo TestData { name = "Large 2"
-                               , combiFunction = Tat.allCombinations
-                               , sample = large
-                               }
-      ]
-
-      , bgroup "Take N"
+    [ bgroup "Take N"
       [ benchAllCombo TestData { name = "Medium 1"
                                , combiFunction =
                                    allCombinationsWith takeN
