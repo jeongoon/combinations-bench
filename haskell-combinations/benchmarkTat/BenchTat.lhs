@@ -1,5 +1,10 @@
 = bencmark implementations of my `Tail after Tail`
 
+Test With:
+
+```sh
+stack build haskell-combinations:bench:tail-after-tail-benchmark
+```
 \begin{code}
 module Main where
 
