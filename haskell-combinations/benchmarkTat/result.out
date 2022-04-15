@@ -1,0 +1,129 @@
+haskell-combinations> benchmarks
+Running 1 benchmarks...
+Benchmark tail-after-tail-benchmark: RUNNING...
+benchmarking Small Sample Comparison/Tail After Tail (Scanl)
+time                 3.342 μs   (3.324 μs .. 3.364 μs)
+                     0.999 R²   (0.996 R² .. 1.000 R²)
+mean                 3.356 μs   (3.345 μs .. 3.374 μs)
+std dev              54.40 ns   (36.22 ns .. 84.66 ns)
+variance introduced by outliers: 15% (moderately inflated)
+
+benchmarking Small Sample Comparison/Tail After Tail (SingleStep)
+time                 2.765 μs   (2.667 μs .. 2.895 μs)
+                     0.989 R²   (0.980 R² .. 0.998 R²)
+mean                 2.674 μs   (2.628 μs .. 2.755 μs)
+std dev              205.1 ns   (126.1 ns .. 330.8 ns)
+variance introduced by outliers: 81% (severely inflated)
+
+benchmarking Small Sample Comparison/Tail After Tail (TwoSteps)
+time                 2.661 μs   (2.594 μs .. 2.776 μs)
+                     0.991 R²   (0.981 R² .. 0.998 R²)
+mean                 2.648 μs   (2.600 μs .. 2.743 μs)
+std dev              202.8 ns   (129.8 ns .. 310.9 ns)
+variance introduced by outliers: 81% (severely inflated)
+
+benchmarking Small Sample Comparison/Dynamic Programming
+time                 3.236 μs   (3.083 μs .. 3.492 μs)
+                     0.915 R²   (0.841 R² .. 0.987 R²)
+mean                 3.824 μs   (3.593 μs .. 4.283 μs)
+std dev              1.212 μs   (715.1 ns .. 1.953 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking Medium Sample Comparison/Tail After Tail (Scanl) 1
+time                 298.4 μs   (296.8 μs .. 300.5 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 297.8 μs   (296.5 μs .. 302.0 μs)
+std dev              6.420 μs   (2.545 μs .. 13.57 μs)
+variance introduced by outliers: 14% (moderately inflated)
+
+benchmarking Medium Sample Comparison/Tail After Tail (Scanl) 2
+time                 312.9 μs   (305.1 μs .. 322.2 μs)
+                     0.993 R²   (0.988 R² .. 0.998 R²)
+mean                 304.3 μs   (300.4 μs .. 310.6 μs)
+std dev              18.17 μs   (12.00 μs .. 24.81 μs)
+variance introduced by outliers: 56% (severely inflated)
+
+benchmarking Medium Sample Comparison/Tail After Tail (SingleStep) 1
+time                 288.1 μs   (286.1 μs .. 290.5 μs)
+                     0.999 R²   (0.998 R² .. 1.000 R²)
+mean                 289.5 μs   (288.7 μs .. 291.6 μs)
+std dev              4.086 μs   (1.399 μs .. 7.579 μs)
+
+benchmarking Medium Sample Comparison/Tail After Tail (SingleStep) 2
+time                 295.0 μs   (288.6 μs .. 300.6 μs)
+                     0.998 R²   (0.997 R² .. 0.999 R²)
+mean                 291.2 μs   (289.9 μs .. 293.5 μs)
+std dev              6.242 μs   (4.021 μs .. 8.747 μs)
+variance introduced by outliers: 14% (moderately inflated)
+
+benchmarking Medium Sample Comparison/Tail After Tail (TwoSteps) 1
+time                 260.0 μs   (258.9 μs .. 261.8 μs)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 264.5 μs   (262.8 μs .. 269.3 μs)
+std dev              9.115 μs   (4.326 μs .. 17.00 μs)
+variance introduced by outliers: 30% (moderately inflated)
+
+benchmarking Medium Sample Comparison/Tail After Tail (TwoSteps) 2
+time                 276.4 μs   (265.9 μs .. 286.7 μs)
+                     0.992 R²   (0.990 R² .. 0.998 R²)
+mean                 268.9 μs   (265.0 μs .. 273.2 μs)
+std dev              15.93 μs   (11.82 μs .. 21.08 μs)
+variance introduced by outliers: 56% (severely inflated)
+
+benchmarking Medium Sample Comparison/Dynamic Programming
+time                 342.8 μs   (341.9 μs .. 344.7 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 343.3 μs   (342.0 μs .. 346.8 μs)
+std dev              6.149 μs   (2.196 μs .. 12.17 μs)
+variance introduced by outliers: 10% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (Scanl) 1
+time                 1.343 s    (1.248 s .. 1.447 s)
+                     0.999 R²   (0.997 R² .. 1.000 R²)
+mean                 1.383 s    (1.358 s .. 1.409 s)
+std dev              31.93 ms   (15.78 ms .. 40.61 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (Scanl) 2
+time                 1.440 s    (1.305 s .. 1.739 s)
+                     0.995 R²   (0.990 R² .. 1.000 R²)
+mean                 1.410 s    (1.363 s .. 1.452 s)
+std dev              49.51 ms   (41.88 ms .. 55.09 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (SingleStep) 1
+time                 1.267 s    (1.229 s .. 1.301 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.234 s    (1.209 s .. 1.251 s)
+std dev              23.42 ms   (8.659 ms .. 30.23 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (SingleStep) 2
+time                 1.221 s    (1.028 s .. 1.508 s)
+                     0.994 R²   (0.982 R² .. 1.000 R²)
+mean                 1.175 s    (1.103 s .. 1.209 s)
+std dev              55.49 ms   (5.647 ms .. 77.85 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (TwoSteps) 1
+time                 1.005 s    (894.0 ms .. 1.140 s)
+                     0.998 R²   (0.993 R² .. 1.000 R²)
+mean                 1.020 s    (1.000 s .. 1.052 s)
+std dev              32.21 ms   (8.366 ms .. 42.79 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Tail After Tail (TwoSteps) 2
+time                 1.004 s    (957.6 ms .. 1.033 s)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.009 s    (996.3 ms .. 1.024 s)
+std dev              15.85 ms   (3.925 ms .. 21.23 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking Large Sample Comparison/Dynamic Programming
+time                 984.5 ms   (914.8 ms .. 1.062 s)
+                     0.999 R²   (0.997 R² .. 1.000 R²)
+mean                 974.9 ms   (964.0 ms .. 985.9 ms)
+std dev              14.24 ms   (2.480 ms .. 19.53 ms)
+variance introduced by outliers: 19% (moderately inflated)
+
+Benchmark tail-after-tail-benchmark: FINISH
