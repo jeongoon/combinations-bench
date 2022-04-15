@@ -191,7 +191,7 @@ allCombinationsWithTwoSteps'
   members@(fm:rms) = -- ^ fm : first member; rms: rest memebers
   let
     initFirstCase = [[fm]]
-    initRestCases = [ [[m]] | m <- rms ]
+    initRestCases = combinations1' rms
 
     mapLeader l {-prevTail-} = map (l:) . concat {-prevTail-}
     genFirstCases = mapLeader fm
@@ -265,7 +265,7 @@ combinationsWith allComboGroupedFunc ms n1@selectFrom n2@selectTo =
     -- note: read from the bottom
     concat                      -- 4. final flattening
     . reverseIfNeeded           -- 3. if user put opposite way, reverse it.
-    . take rangeLength          -- 2. takes only intrested lists
+    . take rangeLength          -- 2. takes only interested lists
     . drop (pred n1')           -- 1. ignore some
     $ allComboGroupedFunc ms
 \end{code}
@@ -284,6 +284,8 @@ After benchmarking, I found `AllcombinationsWithTwoSteps` shows best result
 all categories(small, medium, large) among them
 
 you can find the benchmark *code* on [my github repository][benchmark-tat].
+To save your time, [THIS](https://github.com/jeongoon/combinations-bench/blob/main/haskell-combinations/benchmarkTat/result.out)
+is one of my benchmark result.
 
 \begin{code}
 
